@@ -1,1385 +1,709 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="seo-title">OptiShrink - Free Online Image Compressor | Fast & 100% Private</title>
-    <meta id="seo-desc" name="description" content="Compress JPG, PNG, and WebP images to 20KB, 50KB, 100KB, 500KB, or 1MB online for free. 100% secure client-side image compression with zero server uploads.">
-    <meta name="keywords" content="image compressor, online image compressor, image compressor to 50 kb, image compressor to 1 mb, free image compressor, bulk image compressor, jpg image compressor, webp image compressor">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://optishrink.com/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://optishrink.com/">
-    <meta id="og-title" property="og:title" content="OptiShrink - Free Online Image Compressor">
-    <meta id="og-desc" property="og:description" content="Compress images to 20KB, 50KB, 100KB, or 1MB instantly in your browser without uploading to any server.">
-    <meta property="og:image" content="https://placehold.co/1200x630/2563eb/ffffff?text=OptiShrink+Free+Image+Compressor">
+  <title>Image Compressor - Compress Images Online</title>
+  <meta name="description" content="Free online image compressor. Compress JPG, JPEG, PNG and WebP images quickly without installing software.">
+  <meta name="keywords" content="image compressor, compress image, reduce image size, JPG compressor, PNG compressor, WebP compressor">
 
-    <!-- Twitter / X -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://optishrink.com/">
-    <meta id="tw-title" name="twitter:title" content="OptiShrink - Free Online Image Compressor">
-    <meta id="tw-desc" name="twitter:description" content="Fast, privacy-focused online image compression tool for forms, websites, and emails.">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            900: '#1e3a8a',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #222;
+      min-height: 100vh;
+    }
 
-    <!-- FontAwesome & JSZip CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    header {
+      background: #ffffff;
+      padding: 22px 20px;
+      text-align: center;
+      border-bottom: 1px solid #e5e7eb;
+    }
 
-    <!-- Inter Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    header h1 {
+      font-size: 32px;
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
 
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .drag-active { border-color: #2563eb !important; background-color: rgba(37, 99, 235, 0.05) !important; }
-        /* Custom scrollbar for preview areas */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-    </style>
+    header p {
+      color: #666;
+      font-size: 16px;
+    }
 
-    <!-- Schema.org JSON-LD -->
-    <script type="application/ld+json" id="schema-json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "OptiShrink",
-      "url": "https://optishrink.com",
-      "applicationCategory": "MultimediaApplication",
-      "operatingSystem": "All",
-      "browserRequirements": "Requires JavaScript and HTML5 Canvas support",
-      "description": "Free client-side image compressor tool to reduce image file size to 20KB, 50KB, 100KB, 500KB or 1MB instantly without server upload.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
+    .container {
+      width: 92%;
+      max-width: 900px;
+      margin: 35px auto;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .upload-area {
+      border: 2px dashed #2563eb;
+      border-radius: 15px;
+      padding: 45px 20px;
+      text-align: center;
+      cursor: pointer;
+      background: #f8fbff;
+      transition: 0.2s;
+    }
+
+    .upload-area:hover {
+      background: #eef5ff;
+    }
+
+    .upload-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .upload-area h2 {
+      margin-bottom: 8px;
+      font-size: 22px;
+    }
+
+    .upload-area p {
+      color: #777;
+      margin-bottom: 15px;
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    .choose-btn,
+    .download-btn,
+    .compress-btn {
+      border: none;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .choose-btn {
+      background: #2563eb;
+      color: white;
+    }
+
+    .choose-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .settings {
+      margin-top: 25px;
+      padding: 20px;
+      background: #f8fafc;
+      border-radius: 12px;
+    }
+
+    .settings h3 {
+      margin-bottom: 15px;
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .setting-row label {
+      font-weight: bold;
+    }
+
+    #quality {
+      flex: 1;
+      min-width: 180px;
+      cursor: pointer;
+    }
+
+    #qualityValue {
+      font-weight: bold;
+      color: #2563eb;
+      min-width: 45px;
+    }
+
+    .preview {
+      display: none;
+      margin-top: 30px;
+    }
+
+    .preview h2 {
+      margin-bottom: 20px;
+    }
+
+    .image-boxes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .image-box {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .image-box h3 {
+      margin-bottom: 12px;
+    }
+
+    .image-box img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #eee;
+    }
+
+    .info {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .compress-section {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .compress-btn {
+      background: #16a34a;
+      color: white;
+      padding: 14px 30px;
+      font-size: 16px;
+    }
+
+    .compress-btn:hover {
+      background: #15803d;
+    }
+
+    .compress-btn:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    .download-btn {
+      display: none;
+      margin-top: 15px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+    }
+
+    .download-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .privacy {
+      margin-top: 30px;
+      padding: 18px;
+      background: #eff6ff;
+      border-radius: 10px;
+      text-align: center;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 15px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header h1 {
+        font-size: 26px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .image-boxes {
+        grid-template-columns: 1fr;
+      }
+
+      .upload-area {
+        padding: 35px 15px;
       }
     }
-    </script>
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
 
-    <!-- Privacy Announcement Banner -->
-    <div class="bg-slate-900 text-slate-200 text-xs sm:text-sm py-2 px-4 text-center font-medium flex items-center justify-center gap-2 border-b border-slate-800">
-        <span class="inline-flex items-center justify-center w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span><strong class="text-white">100% Private & Browser-Based:</strong> Your images are compressed locally and never uploaded to any server.</span>
+<body>
+
+  <header>
+    <h1>Image Compressor</h1>
+    <p>Compress your images online for free</p>
+  </header>
+
+  <main class="container">
+    <div class="card">
+
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon">🖼️</div>
+        <h2>Upload Your Image</h2>
+        <p>JPG, JPEG, PNG or WebP</p>
+
+        <button class="choose-btn" type="button" id="chooseBtn">
+          Choose Image
+        </button>
+
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/jpeg,image/png,image/webp"
+        >
+      </div>
+
+      <div class="settings">
+        <h3>Compression Quality</h3>
+
+        <div class="setting-row">
+          <label for="quality">Quality:</label>
+
+          <input
+            type="range"
+            id="quality"
+            min="10"
+            max="100"
+            value="75"
+          >
+
+          <span id="qualityValue">75%</span>
+        </div>
+      </div>
+
+      <div class="preview" id="preview">
+
+        <h2>Image Preview</h2>
+
+        <div class="image-boxes">
+
+          <div class="image-box">
+            <h3>Original</h3>
+
+            <img id="originalImage" alt="Original image">
+
+            <div class="info">
+              <div>Size: <strong id="originalSize">-</strong></div>
+              <div>Dimensions: <strong id="originalDimensions">-</strong></div>
+            </div>
+          </div>
+
+          <div class="image-box">
+            <h3>Compressed</h3>
+
+            <img id="compressedImage" alt="Compressed image">
+
+            <div class="info">
+              <div>Size: <strong id="compressedSize">-</strong></div>
+              <div>Reduction: <strong id="reduction">-</strong></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="compress-section">
+
+          <button
+            class="compress-btn"
+            id="compressBtn"
+            type="button"
+          >
+            Compress Image
+          </button>
+
+          <br>
+
+          <a
+            class="download-btn"
+            id="downloadBtn"
+            href="#"
+            download="compressed-image.jpg"
+          >
+            Download Compressed Image
+          </a>
+
+        </div>
+
+        <div class="message" id="message"></div>
+
+      </div>
+
+      <div class="privacy">
+        🔒 <strong>Privacy:</strong>
+        Your images are processed directly in your browser.
+        They are not uploaded to our server.
+      </div>
+
     </div>
+  </main>
 
-    <!-- Main Navigation Header -->
-    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <a href="#home" onclick="navigateTo('home')" class="flex items-center gap-2.5 group">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-blue-400 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
-                    <i class="fa-solid fa-compress text-lg"></i>
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-extrabold text-xl tracking-tight text-slate-900 leading-none">Opti<span class="text-brand-600">Shrink</span></span>
-                    <span class="text-[10px] text-slate-500 font-medium tracking-wider uppercase">Local Image Compressor</span>
-                </div>
-            </a>
+  <footer>
+    © 2026 Image Compressor. Free online image compression tool.
+  </footer>
 
-            <!-- Desktop Nav Links -->
-            <nav class="hidden md:flex items-center gap-1 font-medium text-sm text-slate-600">
-                <button onclick="navigateTo('home')" class="nav-btn px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-slate-100 transition-colors">Home</button>
-                
-                <!-- Preset Tools Dropdown -->
-                <div class="relative group">
-                    <button class="px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-slate-100 transition-colors flex items-center gap-1">
-                        Presets & Formats <i class="fa-solid fa-chevron-down text-xs ml-0.5 text-slate-400 group-hover:rotate-180 transition-transform"></i>
-                    </button>
-                    <div class="absolute left-0 top-full pt-1 hidden group-hover:block w-56 z-50">
-                        <div class="bg-white rounded-xl shadow-xl border border-slate-100 p-2 text-sm">
-                            <div class="px-3 py-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Target Size</div>
-                            <button onclick="navigateTo('compress-20kb')" class="w-full text-left px-3 py-1.5 rounded-md hover:bg-brand-50 hover:text-brand-600 flex items-center justify-between">Compress to 20 KB <span class="text-xs bg-slate-100 px-1.5 py-0.5 rounded text-slate-500">Forms</span></button>
-                            <button onclick="navigateTo('compress-50kb')" class="w-full text-left px-3 py-1.5 rounded-md hover:bg-brand-50 hover:text-brand-600 flex items-center justify-between">Compress to 50 KB <span class="text-xs bg-slate-100 px-1.5 py-0.5 rounded text-slate-500">Jobs</span></button>
-                            <button onclick="navigateTo('compress-100kb')" class="w-full text-left px-3 py-1.5 rounded-md hover:bg-brand-50 hover:text-brand-600 flex items-center justify-between">Compress to 100 KB <span class="text-xs bg-slate-100 px-1.5 py-0.5 rounded text-slate-500">Docs</span></button>
-                            <button onclick="navigateTo('compress-500kb')" class="w-full text-left px-3 py-1.5 rounded-md hover:bg-brand-50 hover:text-brand-600">Compress to 500 KB</button>
-                            <button onclick="navigateTo('compress-1mb')" class="w-full text-left px-3 py-1.5 rounded-md hover:bg-brand-50 hover:text-brand-600">Compress to 1 MB</button>
-                            <div class="my-1 border-t border-slate-100"></div>
-                            <div class="px-3 py-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Format Tools</div>
-                            <button onclick="navigateTo('jpg-compressor')" class="w-full text-left px-3 py-1.5 rounded-md hover:bg-brand-50 hover:text-brand-600">JPG Image Compressor</button>
-                            <button onclick="navigateTo('jpeg-compressor')" class="w-full text-left px-3 py-1.5 rounded-md hover:bg-brand-50 hover:text-brand-600">JPEG Image Compressor</button>
-                            <button onclick="navigateTo('webp-compressor')" class="w-full text-left px-3 py-1.5 rounded-md hover:bg-brand-50 hover:text-brand-600">WebP Image Compressor</button>
-                        </div>
-                    </div>
-                </div>
 
-                <button onclick="navigateTo('bulk-compressor')" class="nav-btn px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-slate-100 transition-colors flex items-center gap-1.5">
-                    <i class="fa-solid fa-layer-group text-brand-500"></i> Bulk Compressor
-                </button>
-                <button onclick="navigateTo('about')" class="nav-btn px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-slate-100 transition-colors">About</button>
-                <button onclick="navigateTo('faq')" class="nav-btn px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-slate-100 transition-colors">FAQ</button>
-                <button onclick="navigateTo('contact')" class="nav-btn px-3 py-2 rounded-lg hover:text-brand-600 hover:bg-slate-100 transition-colors">Contact</button>
-            </nav>
+  <script>
 
-            <!-- Action buttons & Mobile Hamburger -->
-            <div class="flex items-center gap-2">
-                <button onclick="openDocsModal()" class="text-xs font-semibold px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors hidden sm:flex items-center gap-1.5">
-                    <i class="fa-solid fa-code text-brand-600"></i> Dev Specs & Setup
-                </button>
-                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
-            </div>
-        </div>
+    const fileInput = document.getElementById("fileInput");
+    const chooseBtn = document.getElementById("chooseBtn");
+    const uploadArea = document.getElementById("uploadArea");
 
-        <!-- Mobile Navigation Drawer -->
-        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2 text-slate-700 font-medium">
-            <button onclick="navigateTo('home'); toggleMobileMenu();" class="block w-full text-left py-2 border-b border-slate-100">Home Compressor</button>
-            <button onclick="navigateTo('bulk-compressor'); toggleMobileMenu();" class="block w-full text-left py-2 border-b border-slate-100 font-semibold text-brand-600">Bulk Compressor</button>
-            
-            <div class="py-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Presets</div>
-            <div class="grid grid-cols-2 gap-2 text-xs">
-                <button onclick="navigateTo('compress-20kb'); toggleMobileMenu();" class="p-2 bg-slate-50 rounded text-left">20 KB Preset</button>
-                <button onclick="navigateTo('compress-50kb'); toggleMobileMenu();" class="p-2 bg-slate-50 rounded text-left">50 KB Preset</button>
-                <button onclick="navigateTo('compress-100kb'); toggleMobileMenu();" class="p-2 bg-slate-50 rounded text-left">100 KB Preset</button>
-                <button onclick="navigateTo('compress-500kb'); toggleMobileMenu();" class="p-2 bg-slate-50 rounded text-left">500 KB Preset</button>
-                <button onclick="navigateTo('compress-1mb'); toggleMobileMenu();" class="p-2 bg-slate-50 rounded text-left">1 MB Preset</button>
-                <button onclick="navigateTo('webp-compressor'); toggleMobileMenu();" class="p-2 bg-slate-50 rounded text-left">WebP Tool</button>
-            </div>
+    const quality = document.getElementById("quality");
+    const qualityValue = document.getElementById("qualityValue");
 
-            <div class="pt-2 flex flex-col gap-2">
-                <button onclick="navigateTo('about'); toggleMobileMenu();" class="block w-full text-left py-1 text-sm text-slate-600">About OptiShrink</button>
-                <button onclick="navigateTo('faq'); toggleMobileMenu();" class="block w-full text-left py-1 text-sm text-slate-600">Frequently Asked Questions</button>
-                <button onclick="navigateTo('contact'); toggleMobileMenu();" class="block w-full text-left py-1 text-sm text-slate-600">Contact & Feedback</button>
-            </div>
-        </div>
-    </header>
+    const preview = document.getElementById("preview");
 
-    <!-- Main Content Dynamic Container -->
-    <main class="flex-grow">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-            
-            <!-- AdSense Top Banner Slot (Clean placeholder without deceptive clicks) -->
-            <div class="mb-8 p-3 bg-white rounded-xl border border-dashed border-slate-300 text-center text-xs text-slate-400 flex flex-col items-center justify-center min-h-[90px] shadow-sm">
-                <span class="font-semibold text-slate-500">ADVERTISEMENT PLACEHOLDER</span>
-                <span class="text-[11px] text-slate-400">Responsive AdSense Leaderboard Unit (728x90 or 320x100)</span>
-            </div>
+    const originalImage = document.getElementById("originalImage");
+    const compressedImage = document.getElementById("compressedImage");
 
-            <!-- Toast / Message Notification -->
-            <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm"></div>
+    const originalSize = document.getElementById("originalSize");
+    const compressedSize = document.getElementById("compressedSize");
 
-            <!-- Dynamic View Container -->
-            <div id="app-view">
-                <!-- Views will render dynamically via JS -->
-            </div>
+    const originalDimensions = document.getElementById("originalDimensions");
+    const reduction = document.getElementById("reduction");
 
-            <!-- AdSense Bottom Banner Slot -->
-            <div class="mt-12 p-3 bg-white rounded-xl border border-dashed border-slate-300 text-center text-xs text-slate-400 flex flex-col items-center justify-center min-h-[90px] shadow-sm">
-                <span class="font-semibold text-slate-500">ADVERTISEMENT PLACEHOLDER</span>
-                <span class="text-[11px] text-slate-400">Responsive AdSense Bottom Banner Unit</span>
-            </div>
+    const compressBtn = document.getElementById("compressBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
 
-        </div>
-    </main>
+    const message = document.getElementById("message");
 
-    <!-- Modern Footer -->
-    <footer class="bg-slate-900 text-slate-400 text-sm border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <!-- Brand Info -->
-                <div class="space-y-3">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold">
-                            <i class="fa-solid fa-compress text-sm"></i>
-                        </div>
-                        <span class="font-extrabold text-lg text-white">Opti<span class="text-brand-500">Shrink</span></span>
-                    </div>
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        OptiShrink is a free, privacy-first online image compressor. All image optimization is performed directly inside your web browser using HTML5 Canvas technology.
-                    </p>
-                    <div class="flex gap-3 text-slate-400 pt-1">
-                        <span class="text-xs bg-slate-800 px-2 py-1 rounded text-slate-300"><i class="fa-solid fa-shield-halved text-emerald-400"></i> Zero Server Uploads</span>
-                    </div>
-                </div>
+    let selectedFile = null;
+    let originalDataURL = null;
 
-                <!-- Target Presets Quick Links -->
-                <div>
-                    <h3 class="text-white font-semibold text-xs tracking-wider uppercase mb-3">Popular Target Sizes</h3>
-                    <ul class="space-y-2 text-xs">
-                        <li><a href="#compress-20kb" onclick="navigateTo('compress-20kb')" class="hover:text-white transition-colors">Compress Image to 20 KB</a></li>
-                        <li><a href="#compress-50kb" onclick="navigateTo('compress-50kb')" class="hover:text-white transition-colors">Compress Image to 50 KB</a></li>
-                        <li><a href="#compress-100kb" onclick="navigateTo('compress-100kb')" class="hover:text-white transition-colors">Compress Image to 100 KB</a></li>
-                        <li><a href="#compress-500kb" onclick="navigateTo('compress-500kb')" class="hover:text-white transition-colors">Compress Image to 500 KB</a></li>
-                        <li><a href="#compress-1mb" onclick="navigateTo('compress-1mb')" class="hover:text-white transition-colors">Compress Image to 1 MB</a></li>
-                    </ul>
-                </div>
 
-                <!-- Format Tools -->
-                <div>
-                    <h3 class="text-white font-semibold text-xs tracking-wider uppercase mb-3">Format Compressors</h3>
-                    <ul class="space-y-2 text-xs">
-                        <li><a href="#jpg-compressor" onclick="navigateTo('jpg-compressor')" class="hover:text-white transition-colors">JPG Image Compressor</a></li>
-                        <li><a href="#jpeg-compressor" onclick="navigateTo('jpeg-compressor')" class="hover:text-white transition-colors">JPEG Image Compressor</a></li>
-                        <li><a href="#webp-compressor" onclick="navigateTo('webp-compressor')" class="hover:text-white transition-colors">WebP Image Compressor</a></li>
-                        <li><a href="#bulk-compressor" onclick="navigateTo('bulk-compressor')" class="hover:text-white transition-colors">Bulk Image Compressor</a></li>
-                    </ul>
-                </div>
+    // Choose image button
+    chooseBtn.addEventListener("click", function(event) {
+      event.stopPropagation();
+      fileInput.click();
+    });
 
-                <!-- Legal & Site Links -->
-                <div>
-                    <h3 class="text-white font-semibold text-xs tracking-wider uppercase mb-3">Information & Legal</h3>
-                    <ul class="space-y-2 text-xs">
-                        <li><a href="#about" onclick="navigateTo('about')" class="hover:text-white transition-colors">About Us</a></li>
-                        <li><a href="#contact" onclick="navigateTo('contact')" class="hover:text-white transition-colors">Contact Support</a></li>
-                        <li><a href="#privacy" onclick="navigateTo('privacy')" class="hover:text-white transition-colors">Privacy Policy</a></li>
-                        <li><a href="#terms" onclick="navigateTo('terms')" class="hover:text-white transition-colors">Terms & Conditions</a></li>
-                        <li><a href="#disclaimer" onclick="navigateTo('disclaimer')" class="hover:text-white transition-colors">Disclaimer</a></li>
-                    </ul>
-                </div>
-            </div>
 
-            <div class="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-                <p>&copy; 2026 OptiShrink. All rights reserved. Free Client-Side Utility.</p>
-                <p class="text-slate-400">Designed for speed, privacy, and simplicity.</p>
-            </div>
-        </div>
-    </footer>
+    // Upload area click
+    uploadArea.addEventListener("click", function(event) {
 
-    <!-- Modal for Developer Documentation, Setup Instructions & System Specs -->
-    <div id="docs-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200">
-            <!-- Modal Header -->
-            <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-gears text-brand-400"></i>
-                    <h3 class="font-bold text-base">OptiShrink Deployment & Technical Documentation</h3>
-                </div>
-                <button onclick="closeDocsModal()" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            
-            <!-- Modal Body -->
-            <div class="p-6 overflow-y-auto space-y-6 text-slate-700 text-sm">
-                
-                <div>
-                    <h4 class="font-bold text-slate-900 text-base mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-folder-tree text-brand-600"></i> 1. File Structure & Setup
-                    </h4>
-                    <p class="text-xs text-slate-600 mb-2">OptiShrink is engineered as an ultra-fast, zero-dependency HTML5 single-file application requiring zero Node.js server dependencies.</p>
-                    <pre class="bg-slate-900 text-slate-200 p-3 rounded-lg text-xs font-mono overflow-x-auto">
-optishrink-website/
-├── index.html        # Complete production bundle (HTML, CSS, JS, Routing, Canvas Engine)
-├── robots.txt        # Technical SEO web crawler directives
-└── sitemap.xml       # XML Search Engine Index Map
-                    </pre>
-                </div>
+      if (event.target === chooseBtn) {
+        return;
+      }
 
-                <div>
-                    <h4 class="font-bold text-slate-900 text-base mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-desktop text-brand-600"></i> 2. How to Run Locally
-                    </h4>
-                    <ol class="list-decimal pl-5 space-y-1 text-xs text-slate-600">
-                        <li>Save the single code block as <code>index.html</code>.</li>
-                        <li>Double-click <code>index.html</code> to open directly in Chrome, Firefox, Safari, or Edge.</li>
-                        <li>Alternatively, run a simple local web server:
-                            <code class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-800 font-mono">npx serve</code> or 
-                            <code class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-800 font-mono">python3 -m http.server 8000</code>.
-                        </li>
-                    </ol>
-                </div>
+      fileInput.click();
 
-                <div>
-                    <h4 class="font-bold text-slate-900 text-base mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-cloud-arrow-up text-brand-600"></i> 3. Free Hosting Deployment
-                    </h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
-                            <strong class="block text-slate-800 mb-1">GitHub Pages</strong>
-                            <p class="text-slate-500">Push to a GitHub repository, enable Pages in repository settings under <code>main</code> branch root.</p>
-                        </div>
-                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
-                            <strong class="block text-slate-800 mb-1">Vercel / Netlify</strong>
-                            <p class="text-slate-500">Drag and drop the folder containing <code>index.html</code> into Netlify Drop or import via Vercel Git integration.</p>
-                        </div>
-                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
-                            <strong class="block text-slate-800 mb-1">Cloudflare Pages</strong>
-                            <p class="text-slate-500">Create a new Pages project and upload the HTML file directly with unlimited bandwidth.</p>
-                        </div>
-                    </div>
-                </div>
+    });
 
-                <div>
-                    <h4 class="font-bold text-slate-900 text-base mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-globe text-brand-600"></i> 4. Custom Domain & Google Search Console
-                    </h4>
-                    <ul class="list-disc pl-5 space-y-1 text-xs text-slate-600">
-                        <li><strong>Custom Domain:</strong> Add CNAME/A records pointing to your host (e.g. <code>76.76.21.21</code> for Vercel).</li>
-                        <li><strong>Google Search Console:</strong> Add property <code>https://yourdomain.com</code>, verify via HTML tag or DNS TXT record.</li>
-                        <li><strong>Sitemap Submission:</strong> Submit <code>https://yourdomain.com/sitemap.xml</code> in GSC Sitemaps menu.</li>
-                    </ul>
-                </div>
 
-                <div>
-                    <h4 class="font-bold text-slate-900 text-base mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-microchip text-brand-600"></i> 5. Compression Algorithm Architecture
-                    </h4>
-                    <p class="text-xs text-slate-600 leading-relaxed mb-2">
-                        OptiShrink implements an <strong>iterative binary-search quality reduction algorithm</strong> on an HTML5 2D Canvas context:
-                    </p>
-                    <ol class="list-decimal pl-5 space-y-1 text-xs text-slate-600">
-                        <li>Loads the source image into an uncompressed Image Object.</li>
-                        <li>Renders onto canvas at initial dimension scales.</li>
-                        <li>Executes binary search across export quality parameters (0.05 to 0.95) using <code>canvas.toBlob()</code>.</li>
-                        <li>If target size is ultra-small (e.g. 20 KB) and quality reaches minimum threshold (0.2), the algorithm proportionally downscales canvas width/height by 15% and re-runs quality checks until exact target byte budget is met.</li>
-                    </ol>
-                </div>
+    // Quality slider
+    quality.addEventListener("input", function() {
 
-                <div>
-                    <h4 class="font-bold text-slate-900 text-base mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-rectangle-ad text-brand-600"></i> 6. Google AdSense Integration
-                    </h4>
-                    <p class="text-xs text-slate-600">
-                        To monetize, paste your Google AdSense code snippet into the designated placeholder divs in <code>index.html</code> marked with <code>ADVERTISEMENT PLACEHOLDER</code>.
-                    </p>
-                </div>
+      qualityValue.textContent = quality.value + "%";
 
-            </div>
-            
-            <!-- Modal Footer -->
-            <div class="px-6 py-3 bg-slate-100 border-t border-slate-200 text-right">
-                <button onclick="closeDocsModal()" class="px-4 py-2 bg-slate-900 text-white rounded-lg text-xs font-semibold hover:bg-slate-800">Close Window</button>
-            </div>
-        </div>
-    </div>
+    });
 
-    <script>
-        // Global Application State
-        const state = {
-            currentRoute: 'home',
-            singleTool: {
-                file: null,
-                originalImageObj: null,
-                originalSize: 0,
-                originalWidth: 0,
-                originalHeight: 0,
-                originalType: '',
-                targetKB: 100, // default target 100 KB
-                targetFormat: 'image/jpeg',
-                isCustomQuality: false,
-                customQuality: 80, // % quality slider
-                compressedBlob: null,
-                compressedUrl: null,
-                compressedSize: 0,
-                compressedWidth: 0,
-                compressedHeight: 0,
-                isProcessing: false,
-                noticeMsg: ''
-            },
-            bulkTool: {
-                files: [], // array of { id, file, originalSize, status, compressedBlob, compressedSize, progress }
-                targetKB: 100,
-                targetFormat: 'image/jpeg',
-                isProcessing: false
-            }
+
+    // File selection
+    fileInput.addEventListener("change", function() {
+
+      const file = fileInput.files[0];
+
+      if (!file) {
+        return;
+      }
+
+      handleFile(file);
+
+    });
+
+
+    function handleFile(file) {
+
+      if (!file.type.startsWith("image/")) {
+
+        alert("Please select a valid image file.");
+
+        return;
+      }
+
+
+      const maxSize = 20 * 1024 * 1024;
+
+      if (file.size > maxSize) {
+
+        alert("Please select an image smaller than 20 MB.");
+
+        return;
+      }
+
+
+      selectedFile = file;
+
+      originalSize.textContent = formatBytes(file.size);
+
+      message.textContent = "";
+
+      compressedImage.src = "";
+
+      compressedSize.textContent = "-";
+
+      reduction.textContent = "-";
+
+      downloadBtn.style.display = "none";
+
+
+      const reader = new FileReader();
+
+
+      reader.onload = function(event) {
+
+        originalDataURL = event.target.result;
+
+        originalImage.src = originalDataURL;
+
+        originalImage.onload = function() {
+
+          originalDimensions.textContent =
+            originalImage.naturalWidth +
+            " × " +
+            originalImage.naturalHeight +
+            " px";
+
         };
 
-        // Router Page Configuration and Unique Content Data
-        const routePages = {
-            'home': {
-                title: 'Free Online Image Compressor | Reduce Image Size Private & Fast',
-                h1: 'Free Online Image Compressor',
-                subtitle: 'Compress JPG, PNG, and WebP images to 20KB, 50KB, 100KB, 500KB or 1MB instantly in your browser without losing quality.',
-                defaultPreset: 100,
-                seoText: `
-                    <section class="mt-16 space-y-10 text-slate-700 leading-relaxed border-t border-slate-200 pt-12">
-                        <div class="max-w-3xl">
-                            <h2 class="text-2xl font-bold text-slate-900 mb-4">What is an Online Image Compressor?</h2>
-                            <p class="mb-4">An <strong>online image compressor</strong> is a digital tool designed to shrink image file sizes while preserving visual fidelity. Whether you are filling out official passport applications, submitting job resumes, or optimizing web graphics for SEO performance, compressing images guarantees fast upload times and minimal bandwidth consumption.</p>
-                            <p>OptiShrink is built with modern HTML5 canvas technology, running 100% locally in your web browser. Unlike conventional online tools, your files are never uploaded to remote servers, giving you complete privacy and instant processing speeds.</p>
-                        </div>
+        preview.style.display = "block";
 
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div class="p-5 bg-white rounded-xl border border-slate-200 shadow-sm">
-                                <div class="w-10 h-10 rounded-lg bg-blue-100 text-brand-600 flex items-center justify-center font-bold mb-3"><i class="fa-solid fa-bolt"></i></div>
-                                <h3 class="font-bold text-slate-900 mb-1">Instant Speed</h3>
-                                <p class="text-xs text-slate-600">Zero network upload lag. Images process directly using your device hardware GPU & CPU.</p>
-                            </div>
-                            <div class="p-5 bg-white rounded-xl border border-slate-200 shadow-sm">
-                                <div class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold mb-3"><i class="fa-solid fa-user-shield"></i></div>
-                                <h3 class="font-bold text-slate-900 mb-1">100% Private</h3>
-                                <p class="text-xs text-slate-600">Your photos, documents, and sensitive scans never leave your personal computer or mobile phone.</p>
-                            </div>
-                            <div class="p-5 bg-white rounded-xl border border-slate-200 shadow-sm">
-                                <div class="w-10 h-10 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center font-bold mb-3"><i class="fa-solid fa-bullseye"></i></div>
-                                <h3 class="font-bold text-slate-900 mb-1">Target Size Engine</h3>
-                                <p class="text-xs text-slate-600">Set exact target outputs like 20 KB, 50 KB, 100 KB, or 1 MB. Our algorithm calculates optimal resolution ratio.</p>
-                            </div>
-                        </div>
+        preview.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
 
-                        <div class="space-y-6">
-                            <h2 class="text-2xl font-bold text-slate-900">How to Compress an Image Online with OptiShrink</h2>
-                            <ol class="list-decimal pl-6 space-y-3 font-medium">
-                                <li><strong class="text-slate-900">Upload your Image:</strong> Drag and drop your JPG, PNG, or WebP photo into the box above, or click to choose from your file explorer.</li>
-                                <li><strong class="text-slate-900">Select Target File Size:</strong> Choose one of our preset buttons (such as 20 KB, 50 KB, 100 KB) or type a custom size in kilobytes/megabytes.</li>
-                                <li><strong class="text-slate-900">Click Compress:</strong> The browser engine immediately compresses your image with adaptive quality balancing.</li>
-                                <li><strong class="text-slate-900">Download Compressed Photo:</strong> Preview the before/after file size reduction and download your optimized image.</li>
-                            </ol>
-                        </div>
-                    </section>
-                `
-            },
-            'compress-20kb': {
-                title: 'Compress Image to 20 KB Online Free | OptiShrink',
-                h1: 'Compress Image to 20 KB Online',
-                subtitle: 'Easily shrink photos and scanned signature files down to under 20 KB for official online registration forms.',
-                defaultPreset: 20,
-                seoText: `
-                    <section class="mt-12 space-y-8 text-slate-700 leading-relaxed border-t border-slate-200 pt-10">
-                        <h2 class="text-2xl font-bold text-slate-900">Why Use an Image Compressor to 20 KB?</h2>
-                        <p>Many government portals, university registration systems, entrance exam portals, and visa application websites enforce strict file upload limits between 10 KB and 20 KB for passport photographs and signatures. Uploading files larger than 20 KB results in form rejection errors.</p>
-                        <p>OptiShrink's <strong>image compressor to 20 kb</strong> dynamically adjusts image dimensions and JPEG quantizer tables to ensure your photo stays strictly under 20 kilobytes while preserving essential visual clarity.</p>
-                        
-                        <h3 class="text-lg font-bold text-slate-900 mt-4">Tips for Best Results at 20 KB:</h3>
-                        <ul class="list-disc pl-5 space-y-2 text-sm">
-                            <li>Crop extra white space or backgrounds around signatures and passport faces prior to compression.</li>
-                            <li>Use JPG or WebP formats, as PNG files carry uncompressed transparency overhead.</li>
-                        </ul>
-                    </section>
-                `
-            },
-            'compress-50kb': {
-                title: 'Compress Image to 50 KB Free | OptiShrink',
-                h1: 'Compress Image to 50 KB',
-                subtitle: 'Ideal for online job application portals, resumes, student ID cards, and government document submissions.',
-                defaultPreset: 50,
-                seoText: `
-                    <section class="mt-12 space-y-8 text-slate-700 leading-relaxed border-t border-slate-200 pt-10">
-                        <h2 class="text-2xl font-bold text-slate-900">Image Compression to 50 KB</h2>
-                        <p>A 50 KB target size strikes the ideal balance between high image detail and small file footprint. Online job portals (like LinkedIn, Indeed, state job portals) and university admission portals frequently cap candidate photo uploads at 50 KB.</p>
-                        <p>Using our <strong>image compressor to 50 kb</strong>, you can compress original high-resolution camera photos (often 5MB to 10MB) down to 50 KB in milliseconds without needing complex desktop software like Photoshop.</p>
-                    </section>
-                `
-            },
-            'compress-100kb': {
-                title: 'Compress Image to 100 KB Free Online | OptiShrink',
-                h1: 'Compress Image to 100 KB',
-                subtitle: 'Reduce photo size to 100 KB for emails, web publishing, tax forms, and document verification.',
-                defaultPreset: 100,
-                seoText: `
-                    <section class="mt-12 space-y-8 text-slate-700 leading-relaxed border-t border-slate-200 pt-10">
-                        <h2 class="text-2xl font-bold text-slate-900">Optimize Images to 100 KB</h2>
-                        <p>100 KB is the gold standard for website images, blog illustrations, and email attachments. Keeping images near 100 KB improves site loading speeds and Google PageSpeed Insights scores.</p>
-                    </section>
-                `
-            },
-            'compress-500kb': {
-                title: 'Compress Image to 500 KB | OptiShrink',
-                h1: 'Compress Image to 500 KB',
-                subtitle: 'Shrink large camera photos and high-resolution artwork to 500 KB for high-definition displays.',
-                defaultPreset: 500,
-                seoText: `
-                    <section class="mt-12 space-y-8 text-slate-700 leading-relaxed border-t border-slate-200 pt-10">
-                        <h2 class="text-2xl font-bold text-slate-900">High-Fidelity 500 KB Compression</h2>
-                        <p>When you need crystal clear details for print proofs, portfolio showcases, or social media banners, compressing to 500 KB significantly drops raw file size while keeping crisp visual detail.</p>
-                    </section>
-                `
-            },
-            'compress-1mb': {
-                title: 'Compress Image to 1 MB | OptiShrink',
-                h1: 'Compress Image to 1 MB',
-                subtitle: 'Quickly downsize heavy 20MB+ DSLR photos or RAW exports to 1 MB for easy sharing.',
-                defaultPreset: 1000,
-                seoText: `
-                    <section class="mt-12 space-y-8 text-slate-700 leading-relaxed border-t border-slate-200 pt-10">
-                        <h2 class="text-2xl font-bold text-slate-900">Compress Raw Photos to 1 MB</h2>
-                        <p>Modern mobile phones and DSLR cameras produce images ranging from 12 MB to 40 MB. Shrinking these files to 1 MB reduces file size by up to 95% without noticeable loss on screen displays.</p>
-                    </section>
-                `
-            },
-            'jpg-compressor': {
-                title: 'JPG Image Compressor Online | OptiShrink',
-                h1: 'JPG Image Compressor',
-                subtitle: 'Specialized online JPG file size reducer with lossy adaptive quantization.',
-                defaultPreset: 100,
-                seoText: `
-                    <section class="mt-12 space-y-8 text-slate-700 leading-relaxed border-t border-slate-200 pt-10">
-                        <h2 class="text-2xl font-bold text-slate-900">JPG Compression Mechanics</h2>
-                        <p>Joint Photographic Experts Group (JPG/JPEG) relies on DCT (Discrete Cosine Transform) lossy compression. OptiShrink analyzes image variance to select optimal quality matrices for JPG graphics.</p>
-                    </section>
-                `
-            },
-            'jpeg-compressor': {
-                title: 'JPEG Image Compressor | Reduce JPEG File Size',
-                h1: 'JPEG Image Compressor',
-                subtitle: 'Fast browser JPEG compressor for digital photos and official documents.',
-                defaultPreset: 100,
-                seoText: `
-                    <section class="mt-12 space-y-8 text-slate-700 leading-relaxed border-t border-slate-200 pt-10">
-                        <h2 class="text-2xl font-bold text-slate-900">Free JPEG Compression</h2>
-                        <p>Compress any .jpeg file directly in your browser with live side-by-side visual feedback.</p>
-                    </section>
-                `
-            },
-            'webp-compressor': {
-                title: 'WebP Image Compressor Online | OptiShrink',
-                h1: 'WebP Image Compressor',
-                subtitle: 'Compress next-generation WebP images for modern website performance.',
-                defaultPreset: 100,
-                seoText: `
-                    <section class="mt-12 space-y-8 text-slate-700 leading-relaxed border-t border-slate-200 pt-10">
-                        <h2 class="text-2xl font-bold text-slate-900">Next-Gen WebP Compression</h2>
-                        <p>WebP offers superior compression ratios compared to legacy formats. Use OptiShrink to optimize WebP graphics for web projects.</p>
-                    </section>
-                `
-            },
-            'bulk-compressor': {
-                title: 'Bulk Image Compressor | Compress Multiple Photos Online',
-                h1: 'Bulk Image Compressor',
-                subtitle: 'Compress dozens of images simultaneously and download them all in a single ZIP file.',
-                isBulk: true
-            },
-            'about': {
-                title: 'About OptiShrink | Privacy-First Image Optimizer',
-                isInfoPage: true,
-                content: `
-                    <div class="max-w-4xl mx-auto space-y-8 text-slate-700 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
-                        <div class="border-b border-slate-100 pb-6">
-                            <h1 class="text-3xl font-extrabold text-slate-900 mb-2">About OptiShrink</h1>
-                            <p class="text-slate-500">Learn about our mission, privacy architecture, and browser technology.</p>
-                        </div>
-                        
-                        <div class="space-y-4 leading-relaxed">
-                            <h2 class="text-xl font-bold text-slate-900">Why We Created OptiShrink</h2>
-                            <p>Every day, millions of people need to shrink images for online job applications, government portals, college registrations, and website optimization. Unfortunately, many traditional online image compression tools require users to upload sensitive personal photos, passport scans, and ID cards to unknown remote servers.</p>
-                            <p>We built <strong>OptiShrink</strong> to provide a modern, completely secure alternative. By leveraging modern HTML5 Canvas, File API, and Web Worker capabilities, OptiShrink performs 100% of the image compression algorithms inside your client browser.</p>
+      };
 
-                            <h2 class="text-xl font-bold text-slate-900 mt-6">How Client-Side Image Compression Works</h2>
-                            <p>When you select an image on OptiShrink:</p>
-                            <ul class="list-disc pl-6 space-y-2 text-sm">
-                                <li>The file is read locally using JavaScript's <code>FileReader</code> interface.</li>
-                                <li>An off-screen 2D <code>HTMLCanvasElement</code> is initialized inside your browser memory.</li>
-                                <li>Our adaptive algorithm adjusts export quality factors and canvas pixel density to reach your target file budget (e.g. 20KB or 100KB).</li>
-                                <li>A compressed <code>Blob</code> binary object is generated locally for instant downloading.</li>
-                            </ul>
 
-                            <h2 class="text-xl font-bold text-slate-900 mt-6">Competitor Transparency & Brand Note</h2>
-                            <p class="text-sm text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                                Note: OptiShrink is an independent open utility. Search queries like "pi7 image compressor" or similar branded terms refer to external third-party services. OptiShrink is not affiliated with Pi7 or other commercial compression providers. We pride ourselves on zero server tracking and maximum user privacy.
-                            </p>
-                        </div>
-                    </div>
-                `
-            },
-            'contact': {
-                title: 'Contact Us | OptiShrink Support',
-                isInfoPage: true,
-                content: `
-                    <div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
-                        <div class="mb-6">
-                            <h1 class="text-2xl font-extrabold text-slate-900 mb-1">Contact Support</h1>
-                            <p class="text-xs text-slate-500">Have a bug report, suggestion, or feedback? Send us a message below.</p>
-                        </div>
+      reader.readAsDataURL(file);
 
-                        <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-4 text-sm">
-                            <div>
-                                <label class="block font-semibold text-slate-700 mb-1">Your Name</label>
-                                <input type="text" required placeholder="John Doe" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 outline-none">
-                            </div>
-                            <div>
-                                <label class="block font-semibold text-slate-700 mb-1">Email Address</label>
-                                <input type="email" required placeholder="name@example.com" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 outline-none">
-                            </div>
-                            <div>
-                                <label class="block font-semibold text-slate-700 mb-1">Subject</label>
-                                <input type="text" required placeholder="Feedback regarding compression..." class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 outline-none">
-                            </div>
-                            <div>
-                                <label class="block font-semibold text-slate-700 mb-1">Message</label>
-                                <textarea rows="4" required placeholder="Describe your issue or suggestion..." class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 outline-none"></textarea>
-                            </div>
-                            <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg shadow-md transition-all">
-                                Send Message
-                            </button>
-                        </form>
-                    </div>
-                `
-            },
-            'faq': {
-                title: 'Frequently Asked Questions | OptiShrink',
-                isInfoPage: true,
-                content: `
-                    <div class="max-w-4xl mx-auto space-y-8">
-                        <div class="text-center max-w-xl mx-auto">
-                            <h1 class="text-3xl font-extrabold text-slate-900 mb-2">Frequently Asked Questions</h1>
-                            <p class="text-slate-500 text-sm">Find answers to common questions about image compression, quality preservation, and privacy safety.</p>
-                        </div>
+    }
 
-                        <div class="space-y-4" id="faq-accordion">
-                            ${renderFAQItem('What is an image compressor?', 'An image compressor is a tool that reduces the file size (in kilobytes or megabytes) of an image file. It helps photos load faster on websites and pass file-size limits on digital application forms.', true)}
-                            ${renderFAQItem('Are my uploaded images stored on any server?', 'No! OptiShrink processes images entirely inside your browser using JavaScript and HTML5 Canvas. Your files are never transmitted to any external server or cloud database.', false)}
-                            ${renderFAQItem('How do I compress an image to 20 KB or 50 KB?', 'Simply upload your image, click on the "20 KB" or "50 KB" target button, and press "Compress Image". Our tool will automatically recalculate quality settings and dimensions to fit your file budget.', false)}
-                            ${renderFAQItem('Does image compression reduce visual quality?', 'When shrinking an image to extreme target sizes (such as 20KB from a 10MB photo), some pixel density loss occurs to meet the byte budget. However, OptiShrink uses adaptive balancing to retain the highest possible sharpness.', false)}
-                            ${renderFAQItem('Can I compress multiple images at once?', 'Yes! Navigate to our "Bulk Compressor" tool to select multiple images simultaneously, compress them in batch, and download them as a ZIP archive.', false)}
-                            ${renderFAQItem('Is OptiShrink completely free to use?', 'Yes, OptiShrink is 100% free with no hidden subscriptions, file limits, or mandatory registration.', false)}
-                        </div>
-                    </div>
-                `
-            },
-            'privacy': {
-                title: 'Privacy Policy | OptiShrink',
-                isInfoPage: true,
-                content: `
-                    <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200 shadow-sm text-slate-700 space-y-6 text-sm">
-                        <h1 class="text-3xl font-extrabold text-slate-900 border-b border-slate-100 pb-4">Privacy Policy</h1>
-                        <p><strong>Effective Date:</strong> January 1, 2026</p>
 
-                        <h2 class="text-lg font-bold text-slate-900">1. Zero Server Upload Architecture</h2>
-                        <p>At OptiShrink, user privacy is our top fundamental priority. Unlike traditional server-based compression applications, OptiShrink is built as a pure client-side application. When you select, drag, or compress images, the data remains inside your browser memory buffer. No images or metadata are stored or inspected on remote servers.</p>
+    // Compress image
+    compressBtn.addEventListener("click", function() {
 
-                        <h2 class="text-lg font-bold text-slate-900">2. Information Collection</h2>
-                        <p>We do not collect personal identification information (such as names, address details, or uploaded documents). Standard non-personally identifiable web analytical counters (such as pageview counts) may be utilized to monitor site traffic.</p>
+      if (!selectedFile) {
 
-                        <h2 class="text-lg font-bold text-slate-900">3. Cookies & Advertising</h2>
-                        <p>OptiShrink may display advertisements via Google AdSense or third-party networks. These vendors may place cookies on your device to serve ads based on non-personal browsing history.</p>
+        alert("Please select an image first.");
 
-                        <h2 class="text-lg font-bold text-slate-900">4. Contact Rights</h2>
-                        <p>If you have questions regarding our privacy standard, contact us via the support form.</p>
-                    </div>
-                `
-            },
-            'terms': {
-                title: 'Terms & Conditions | OptiShrink',
-                isInfoPage: true,
-                content: `
-                    <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200 shadow-sm text-slate-700 space-y-6 text-sm">
-                        <h1 class="text-3xl font-extrabold text-slate-900 border-b border-slate-100 pb-4">Terms & Conditions</h1>
-                        <p>By using OptiShrink, you agree to comply with the following terms:</p>
-                        <ul class="list-disc pl-6 space-y-2">
-                            <li><strong>Acceptable Use:</strong> You agree to use the utility for lawful image processing purposes only.</li>
-                            <li><strong>Intellectual Property:</strong> You retain 100% full ownership of all image files processed through OptiShrink.</li>
-                            <li><strong>Disclaimer of Warranty:</strong> The service is provided "AS IS" without warranties of any kind regarding speed or compression exactness on corrupted files.</li>
-                        </ul>
-                    </div>
-                `
-            },
-            'disclaimer': {
-                title: 'Disclaimer | OptiShrink',
-                isInfoPage: true,
-                content: `
-                    <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-slate-200 shadow-sm text-slate-700 space-y-6 text-sm">
-                        <h1 class="text-3xl font-extrabold text-slate-900 border-b border-slate-100 pb-4">Disclaimer</h1>
-                        <p>OptiShrink makes every effort to compress images to your requested target sizes (such as 20KB or 50KB). In rare instances, if a source file is extremely complex or small, reaching an absolute byte target without severe distortion may be mathematically impossible. In such scenarios, the algorithm produces the nearest optimal size.</p>
-                    </div>
-                `
+        return;
+      }
+
+
+      compressBtn.disabled = true;
+
+      compressBtn.textContent = "Compressing...";
+
+      message.textContent = "";
+
+
+      const img = new Image();
+
+
+      img.onload = function() {
+
+        const canvas = document.createElement("canvas");
+
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+
+
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+
+
+        let outputType = "image/jpeg";
+
+        if (selectedFile.type === "image/png") {
+
+          outputType = "image/png";
+
+        } else if (selectedFile.type === "image/webp") {
+
+          outputType = "image/webp";
+
+        }
+
+
+        const qualityValueNumber =
+          Number(quality.value) / 100;
+
+
+        canvas.toBlob(
+
+          function(blob) {
+
+            if (!blob) {
+
+              message.textContent =
+                "Compression failed. Please try another image.";
+
+              compressBtn.disabled = false;
+
+              compressBtn.textContent =
+                "Compress Image";
+
+              return;
             }
-        };
 
-        function formatBytes(bytes, decimals = 2) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const dm = decimals < 0 ? 0 : decimals;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-        }
 
-        function renderFAQItem(q, a, isOpen = false) {
-            return `
-                <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                    <button onclick="toggleFAQ(this)" class="w-full text-left p-5 font-semibold text-slate-900 flex justify-between items-center hover:bg-slate-50 transition-colors">
-                        <span>${q}</span>
-                        <i class="fa-solid fa-chevron-down text-slate-400 transform transition-transform ${isOpen ? 'rotate-180' : ''}"></i>
-                    </button>
-                    <div class="p-5 pt-0 text-slate-600 text-sm border-t border-slate-100 ${isOpen ? '' : 'hidden'}">
-                        ${a}
-                    </div>
-                </div>
-            `;
-        }
+            const compressedURL =
+              URL.createObjectURL(blob);
 
-        function toggleFAQ(btn) {
-            const content = btn.nextElementSibling;
-            const icon = btn.querySelector('.fa-chevron-down');
-            content.classList.toggle('hidden');
-            icon.classList.toggle('rotate-180');
-        }
 
-        function showToast(msg, type = 'info') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            const bg = type === 'error' ? 'bg-red-600' : type === 'success' ? 'bg-emerald-600' : 'bg-slate-800';
-            toast.className = `${bg} text-white px-4 py-3 rounded-xl shadow-xl text-xs flex items-center gap-2.5 transition-all transform translate-y-2 opacity-0`;
-            toast.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-triangle-exclamation' : type === 'success' ? 'fa-circle-check' : 'fa-circle-info'}"></i> <span>${msg}</span>`;
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            }, 10);
+            compressedImage.src = compressedURL;
 
-            setTimeout(() => {
-                toast.classList.add('opacity-0');
-                setTimeout(() => toast.remove(), 300);
-            }, 3500);
-        }
 
-        function navigateTo(route) {
-            state.currentRoute = route;
-            window.location.hash = route === 'home' ? '' : `#${route}`;
-            renderView();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+            compressedSize.textContent =
+              formatBytes(blob.size);
 
-        window.addEventListener('hashchange', () => {
-            const hash = window.location.hash.replace('#', '');
-            if (hash && routePages[hash]) {
-                state.currentRoute = hash;
+
+            const reductionPercent =
+              ((selectedFile.size - blob.size) /
+                selectedFile.size) * 100;
+
+
+            if (reductionPercent > 0) {
+
+              reduction.textContent =
+                reductionPercent.toFixed(1) + "% smaller";
+
             } else {
-                state.currentRoute = 'home';
-            }
-            renderView();
-        });
 
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
+              reduction.textContent =
+                "No reduction";
 
-        function openDocsModal() {
-            document.getElementById('docs-modal').classList.remove('hidden');
-        }
-
-        function closeDocsModal() {
-            document.getElementById('docs-modal').classList.add('hidden');
-        }
-
-        function renderView() {
-            const app = document.getElementById('app-view');
-            const routeInfo = routePages[state.currentRoute] || routePages['home'];
-
-            // Update Metadata dynamically
-            document.title = routeInfo.title || 'OptiShrink - Free Image Compressor';
-            const metaDesc = document.getElementById('seo-desc');
-            if (metaDesc) metaDesc.setAttribute('content', routeInfo.subtitle || routeInfo.title);
-
-            // Informational pages
-            if (routeInfo.isInfoPage) {
-                app.innerHTML = routeInfo.content;
-                return;
             }
 
-            // Bulk tool view
-            if (routeInfo.isBulk) {
-                renderBulkView(app);
-                return;
-            }
-
-            // Apply default target KB preset if navigating to specific preset routes
-            if (routeInfo.defaultPreset) {
-                state.singleTool.targetKB = routeInfo.defaultPreset;
-            }
-
-            // Single Compressor Main View
-            renderSingleCompressorView(app, routeInfo);
-        }
-
-        function renderSingleCompressorView(container, routeInfo) {
-            const tool = state.singleTool;
-
-            container.innerHTML = `
-                <div class="space-y-8">
-                    <!-- Title Hero Header -->
-                    <div class="text-center max-w-3xl mx-auto">
-                        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
-                            ${routeInfo.h1}
-                        </h1>
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                            ${routeInfo.subtitle}
-                        </p>
-                    </div>
-
-                    <!-- Main Compressor Tool Card -->
-                    <div class="bg-white rounded-3xl border border-slate-200/80 shadow-xl overflow-hidden">
-                        
-                        <!-- Top File Upload Dropzone (If no file uploaded yet) -->
-                        ${!tool.file ? `
-                            <div class="p-8 sm:p-12">
-                                <div id="drop-zone" 
-                                     onaction="preventDefault()"
-                                     ondragover="handleDragOver(event)"
-                                     ondragleave="handleDragLeave(event)"
-                                     ondrop="handleFileDrop(event)"
-                                     onclick="document.getElementById('single-file-input').click()"
-                                     class="border-2 border-dashed border-slate-300 rounded-2xl p-8 sm:p-12 text-center cursor-pointer hover:border-brand-500 hover:bg-brand-50/30 transition-all group">
-                                    
-                                    <input type="file" id="single-file-input" accept="image/jpeg,image/png,image/webp" class="hidden" onchange="handleFileSelect(event)">
-                                    
-                                    <div class="w-16 h-16 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-inner">
-                                        <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
-                                    </div>
-                                    <h3 class="font-bold text-slate-900 text-lg mb-1">Drop your image here, or <span class="text-brand-600 underline">browse</span></h3>
-                                    <p class="text-xs text-slate-500 mb-4">Supports JPG, JPEG, PNG, WebP (Max 25 MB per image)</p>
-                                    
-                                    <div class="inline-flex items-center gap-2 text-xs text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full font-medium">
-                                        <i class="fa-solid fa-lock text-emerald-600"></i> Fast Local Processing • Zero Data Upload
-                                    </div>
-                                </div>
-                            </div>
-                        ` : `
-                            <!-- Active Image Processing Dashboard -->
-                            <div class="p-6 sm:p-8 space-y-8">
-                                
-                                <!-- Preset Target Size Selector Buttons -->
-                                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 space-y-3">
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-                                            <i class="fa-solid fa-sliders text-brand-600"></i> Target Compression Settings
-                                        </span>
-                                        <span class="text-xs font-semibold text-brand-600">Selected Target: ${tool.targetKB} KB</span>
-                                    </div>
-
-                                    <!-- Quick Preset Buttons -->
-                                    <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-xs font-medium">
-                                        ${[20, 50, 100, 200, 500, 1000].map(kb => `
-                                            <button onclick="setTargetKB(${kb})" 
-                                                    class="py-2 px-3 rounded-xl border transition-all ${tool.targetKB === kb ? 'bg-brand-600 text-white border-brand-600 shadow-md' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'}">
-                                                ${kb >= 1000 ? (kb/1000) + ' MB' : kb + ' KB'}
-                                            </button>
-                                        `).join('')}
-                                    </div>
-
-                                    <!-- Custom KB & Format Input -->
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                                        <div>
-                                            <label class="block text-xs font-medium text-slate-600 mb-1">Custom Target Size (KB)</label>
-                                            <div class="flex gap-2">
-                                                <input type="number" min="5" max="50000" value="${tool.targetKB}" onchange="setTargetKB(parseInt(this.value) || 100)" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none">
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label class="block text-xs font-medium text-slate-600 mb-1">Output Format</label>
-                                            <select onchange="setTargetFormat(this.value)" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none bg-white">
-                                                <option value="image/jpeg" ${tool.targetFormat === 'image/jpeg' ? 'selected' : ''}>JPG / JPEG Format</option>
-                                                <option value="image/webp" ${tool.targetFormat === 'image/webp' ? 'selected' : ''}>WebP Format (Best Compression)</option>
-                                                <option value="image/png" ${tool.targetFormat === 'image/png' ? 'selected' : ''}>PNG Format</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="pt-2 text-center">
-                                        <button onclick="executeCompression()" class="w-full sm:w-auto px-8 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-brand-500/20 transition-all flex items-center justify-center gap-2 mx-auto">
-                                            ${tool.isProcessing ? '<i class="fa-solid fa-spinner animate-spin"></i> Compressing Image...' : '<i class="fa-solid fa-bolt"></i> Compress Image Now'}
-                                        </button>
-                                    </div>
-                                </div>
-
-                                ${tool.noticeMsg ? `
-                                    <div class="bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-xl text-xs flex items-center gap-2">
-                                        <i class="fa-solid fa-circle-info text-amber-600 text-sm"></i>
-                                        <span>${tool.noticeMsg}</span>
-                                    </div>
-                                ` : ''}
-
-                                <!-- Side-by-side Before / After Preview Comparison -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    
-                                    <!-- Original Image Card -->
-                                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col space-y-3">
-                                        <div class="flex justify-between items-center text-xs font-bold text-slate-600">
-                                            <span>Original Image</span>
-                                            <span class="bg-slate-200 px-2 py-0.5 rounded text-slate-700">${formatBytes(tool.originalSize)}</span>
-                                        </div>
-                                        
-                                        <div class="flex-grow bg-white border border-slate-200 rounded-xl overflow-hidden flex items-center justify-center p-2 min-h-[220px] max-h-[300px]">
-                                            <img src="${tool.originalImageObj.src}" class="max-h-full max-w-full object-contain rounded" alt="Original Upload Preview">
-                                        </div>
-
-                                        <div class="text-[11px] text-slate-500 flex justify-between pt-1">
-                                            <span>Dimensions: ${tool.originalWidth} x ${tool.originalHeight} px</span>
-                                            <span>Type: ${tool.originalType.replace('image/', '').toUpperCase()}</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Compressed Image Result Card -->
-                                    <div class="bg-brand-50/50 border border-brand-200/70 rounded-2xl p-4 flex flex-col space-y-3">
-                                        <div class="flex justify-between items-center text-xs font-bold text-slate-900">
-                                            <span>Compressed Result</span>
-                                            ${tool.compressedSize ? `
-                                                <span class="bg-emerald-600 text-white px-2.5 py-0.5 rounded font-bold">${formatBytes(tool.compressedSize)}</span>
-                                            ` : '<span class="text-slate-400">Ready</span>'}
-                                        </div>
-
-                                        <div class="flex-grow bg-white border border-slate-200 rounded-xl overflow-hidden flex items-center justify-center p-2 min-h-[220px] max-h-[300px] relative">
-                                            ${tool.compressedUrl ? `
-                                                <img src="${tool.compressedUrl}" class="max-h-full max-w-full object-contain rounded" alt="Compressed Preview">
-                                            ` : `
-                                                <div class="text-center text-slate-400 text-xs p-4">
-                                                    <i class="fa-solid fa-arrow-pointer text-2xl mb-2 block"></i>
-                                                    Click "Compress Image Now" above to generate output preview.
-                                                </div>
-                                            `}
-                                        </div>
-
-                                        <div class="text-[11px] text-slate-600 flex justify-between pt-1">
-                                            <span>Target: ${tool.targetKB} KB</span>
-                                            ${tool.compressedSize ? `
-                                                <span class="text-emerald-700 font-bold">Reduced by ${Math.max(0, Math.round(((tool.originalSize - tool.compressedSize) / tool.originalSize) * 100))}%</span>
-                                            ` : ''}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Action Buttons Bottom Bar -->
-                                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-100 pt-6">
-                                    <button onclick="resetSingleTool()" class="text-xs font-semibold text-slate-500 hover:text-slate-800 flex items-center gap-1.5">
-                                        <i class="fa-solid fa-rotate-left"></i> Choose Another Image
-                                    </button>
-
-                                    ${tool.compressedBlob ? `
-                                        <a href="${tool.compressedUrl}" download="optishrink_${tool.file.name}" class="w-full sm:w-auto px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2">
-                                            <i class="fa-solid fa-download"></i> Download Compressed Photo
-                                        </a>
-                                    ` : ''}
-                                </div>
-
-                            </div>
-                        `}
-                    </div>
-
-                    <!-- Dynamic SEO Section Content -->
-                    ${routeInfo.seoText || ''}
-                </div>
-            `;
-        }
-
-        function renderBulkView(container) {
-            const bulk = state.bulkTool;
-
-            container.innerHTML = `
-                <div class="space-y-8 max-w-5xl mx-auto">
-                    <!-- Title Header -->
-                    <div class="text-center max-w-2xl mx-auto">
-                        <h1 class="text-3xl font-extrabold text-slate-900 mb-2">Bulk Image Compressor</h1>
-                        <p class="text-slate-600 text-sm">Upload multiple photos simultaneously, select target compression budgets, and download all compressed files in a ZIP archive.</p>
-                    </div>
-
-                    <div class="bg-white rounded-3xl border border-slate-200 shadow-xl p-6 sm:p-8 space-y-6">
-                        
-                        <!-- Upload Drop Box -->
-                        <div id="bulk-drop-zone"
-                             ondragover="handleDragOver(event)"
-                             ondragleave="handleDragLeave(event)"
-                             ondrop="handleBulkFileDrop(event)"
-                             onclick="document.getElementById('bulk-file-input').click()"
-                             class="border-2 border-dashed border-slate-300 rounded-2xl p-8 text-center cursor-pointer hover:border-brand-500 hover:bg-brand-50/20 transition-all">
-                            
-                            <input type="file" id="bulk-file-input" multiple accept="image/jpeg,image/png,image/webp" class="hidden" onchange="handleBulkSelect(event)">
-                            <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center mx-auto mb-3">
-                                <i class="fa-solid fa-layer-group text-xl"></i>
-                            </div>
-                            <h3 class="font-bold text-slate-900 text-base mb-1">Click or Drag & Drop Multiple Images</h3>
-                            <p class="text-xs text-slate-500">Select up to 20 images at once for batch processing.</p>
-                        </div>
-
-                        ${bulk.files.length > 0 ? `
-                            <!-- Controls Bar -->
-                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-                                <div class="flex items-center gap-3 w-full sm:w-auto text-xs">
-                                    <span class="font-bold text-slate-700">Batch Target:</span>
-                                    <select onchange="setBulkTargetKB(parseInt(this.value))" class="px-3 py-1.5 rounded-lg border border-slate-300 bg-white font-semibold">
-                                        <option value="20" ${bulk.targetKB === 20 ? 'selected' : ''}>20 KB</option>
-                                        <option value="50" ${bulk.targetKB === 50 ? 'selected' : ''}>50 KB</option>
-                                        <option value="100" ${bulk.targetKB === 100 ? 'selected' : ''}>100 KB</option>
-                                        <option value="500" ${bulk.targetKB === 500 ? 'selected' : ''}>500 KB</option>
-                                        <option value="1000" ${bulk.targetKB === 1000 ? 'selected' : ''}>1 MB</option>
-                                    </select>
-                                </div>
-
-                                <div class="flex items-center gap-2 w-full sm:w-auto">
-                                    <button onclick="executeBulkCompression()" class="flex-1 sm:flex-none px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-2">
-                                        ${bulk.isProcessing ? '<i class="fa-solid fa-spinner animate-spin"></i> Processing Batch...' : '<i class="fa-solid fa-bolt"></i> Compress All Files'}
-                                    </button>
-
-                                    <button onclick="downloadBulkZip()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-1.5">
-                                        <i class="fa-solid fa-file-zipper"></i> Download ZIP
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Files List Table -->
-                            <div class="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden text-xs">
-                                ${bulk.files.map((item, index) => `
-                                    <div class="p-3 bg-white flex flex-col sm:flex-row items-center justify-between gap-3">
-                                        <div class="flex items-center gap-3 w-full sm:w-1/3">
-                                            <span class="font-mono text-slate-400 w-4">${index + 1}.</span>
-                                            <span class="font-medium text-slate-800 truncate">${item.file.name}</span>
-                                        </div>
-
-                                        <div class="flex items-center gap-4 text-slate-500">
-                                            <span>Original: ${formatBytes(item.originalSize)}</span>
-                                            <i class="fa-solid fa-arrow-right text-[10px] text-slate-300"></i>
-                                            <span class="font-bold ${item.compressedSize ? 'text-emerald-600' : 'text-slate-400'}">
-                                                ${item.compressedSize ? formatBytes(item.compressedSize) : 'Pending'}
-                                            </span>
-                                        </div>
-
-                                        <div class="flex items-center gap-2">
-                                            ${item.compressedBlob ? `
-                                                <a href="${URL.createObjectURL(item.compressedBlob)}" download="optishrink_${item.file.name}" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded font-semibold text-[11px]">
-                                                    <i class="fa-solid fa-download"></i> Download
-                                                </a>
-                                            ` : ''}
-                                            <button onclick="removeBulkFile(${index})" class="text-slate-400 hover:text-red-500 p-1">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        ` : ''}
-                    </div>
-                </div>
-            `;
-        }
-
-        function handleDragOver(e) {
-            e.preventDefault();
-            e.currentTarget.classList.add('drag-active');
-        }
-
-        function handleDragLeave(e) {
-            e.currentTarget.classList.remove('drag-active');
-        }
-
-        function handleFileDrop(e) {
-            e.preventDefault();
-            e.currentTarget.classList.remove('drag-active');
-            if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-                processSingleFile(e.dataTransfer.files[0]);
-            }
-        }
-
-        function handleFileSelect(e) {
-            if (e.target.files && e.target.files[0]) {
-                processSingleFile(e.target.files[0]);
-            }
-        }
-
-        function processSingleFile(file) {
-            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
-            if (!validTypes.includes(file.type)) {
-                showToast('Unsupported format! Please upload a JPG, PNG, or WebP image.', 'error');
-                return;
-            }
-
-            if (file.size > 25 * 1024 * 1024) {
-                showToast('File size is extremely large (> 25 MB). Please choose a smaller file.', 'error');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function (event) {
-                const img = new Image();
-                img.onload = function () {
-                    state.singleTool.file = file;
-                    state.singleTool.originalImageObj = img;
-                    state.singleTool.originalSize = file.size;
-                    state.singleTool.originalWidth = img.width;
-                    state.singleTool.originalHeight = img.height;
-                    state.singleTool.originalType = file.type;
-                    state.singleTool.targetFormat = file.type === 'image/png' ? 'image/jpeg' : file.type;
-                    state.singleTool.compressedBlob = null;
-                    state.singleTool.compressedUrl = null;
-                    state.singleTool.compressedSize = 0;
-                    state.singleTool.noticeMsg = '';
-
-                    renderView();
-                    // Auto execute initial compression
-                    executeCompression();
-                };
-                img.onerror = function () {
-                    showToast('Corrupted or unreadable image file!', 'error');
-                };
-                img.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function setTargetKB(kb) {
-            state.singleTool.targetKB = kb;
-            renderView();
-        }
-
-        function setTargetFormat(format) {
-            state.singleTool.targetFormat = format;
-            renderView();
-        }
-
-        function resetSingleTool() {
-            state.singleTool.file = null;
-            state.singleTool.originalImageObj = null;
-            state.singleTool.compressedBlob = null;
-            state.singleTool.compressedUrl = null;
-            state.singleTool.compressedSize = 0;
-            state.singleTool.noticeMsg = '';
-            renderView();
-        }
-
-        async function executeCompression() {
-            const tool = state.singleTool;
-            if (!tool.originalImageObj) return;
-
-            tool.isProcessing = true;
-            tool.noticeMsg = '';
-            renderView();
-
-            const targetBytes = tool.targetKB * 1024;
-            const img = tool.originalImageObj;
-
-            try {
-                // Iterative Adaptive Compression Algorithm
-                let result = await compressToTargetSize(img, targetBytes, tool.targetFormat);
-
-                tool.compressedBlob = result.blob;
-                tool.compressedSize = result.blob.size;
-                tool.compressedUrl = URL.createObjectURL(result.blob);
-                tool.compressedWidth = result.width;
-                tool.compressedHeight = result.height;
-
-                if (result.blob.size > targetBytes * 1.1) {
-                    tool.noticeMsg = `Notice: Target size of ${tool.targetKB} KB could not be reached without excessive visual pixel distortion. Compressed to best achievable ${formatBytes(result.blob.size)}.`;
-                }
-
-                showToast('Compression completed successfully!', 'success');
-            } catch (err) {
-                console.error(err);
-                showToast('Compression failed! Please try another image or settings.', 'error');
-            } finally {
-                tool.isProcessing = false;
-                renderView();
-            }
-        }
-
-        /* Adaptive binary search compression worker function */
-        function compressToTargetSize(img, targetBytes, mimeType) {
-            return new Promise((resolve, reject) => {
-                let canvas = document.createElement('canvas');
-                let ctx = canvas.getContext('2d');
-
-                let width = img.width;
-                let height = img.height;
-
-                canvas.width = width;
-                canvas.height = height;
-                ctx.drawImage(img, 0, 0, width, height);
-
-                // PNG is lossless canvas export. If format is PNG, attempt scale reduction
-                if (mimeType === 'image/png') {
-                    let scale = 1.0;
-                    const attemptPng = () => {
-                        canvas.width = Math.round(width * scale);
-                        canvas.height = Math.round(height * scale);
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-                        canvas.toBlob((blob) => {
-                            if (blob.size <= targetBytes || scale <= 0.2) {
-                                resolve({ blob, width: canvas.width, height: canvas.height });
-                            } else {
-                                scale -= 0.15;
-                                attemptPng();
-                            }
-                        }, 'image/png');
-                    };
-                    attemptPng();
-                    return;
-                }
-
-                // For JPG and WebP: Run adaptive binary quality search combined with dimension downscaling
-                let minQuality = 0.05;
-                let maxQuality = 0.95;
-                let bestBlob = null;
-                let bestQuality = 0.75;
-                let iterations = 0;
-                let scale = 1.0;
-
-                const runLoop = () => {
-                    canvas.width = Math.round(width * scale);
-                    canvas.height = Math.round(height * scale);
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-                    const testQuality = (q) => {
-                        return new Promise((res) => {
-                            canvas.toBlob((b) => res(b), mimeType, q);
-                        });
-                    };
-
-                    const binarySearch = async () => {
-                        let low = 0.05;
-                        let high = 0.95;
-                        let lastBlob = null;
-
-                        for (let i = 0; i < 7; i++) {
-                            let mid = (low + high) / 2;
-                            let currentBlob = await testQuality(mid);
-                            lastBlob = currentBlob;
-
-                            if (currentBlob.size > targetBytes) {
-                                high = mid;
-                            } else {
-                                low = mid;
-                            }
-                        }
-
-                        if (lastBlob.size <= targetBytes || scale <= 0.2) {
-                            resolve({ blob: lastBlob, width: canvas.width, height: canvas.height });
-                        } else {
-                            scale -= 0.15; // Downscale dimensions by 15% and re-run search loop
-                            runLoop();
-                        }
-                    };
-
-                    binarySearch();
-                };
-
-                runLoop();
-            });
-        }
-
-        function handleBulkFileDrop(e) {
-            e.preventDefault();
-            if (e.dataTransfer.files) {
-                addBulkFiles(e.dataTransfer.files);
-            }
-        }
-
-        function handleBulkSelect(e) {
-            if (e.target.files) {
-                addBulkFiles(e.target.files);
-            }
-        }
-
-        function addBulkFiles(fileList) {
-            const filesArr = Array.from(fileList).slice(0, 20);
-            filesArr.forEach(file => {
-                if (['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-                    state.bulkTool.files.push({
-                        id: Math.random().toString(36).substr(2, 9),
-                        file: file,
-                        originalSize: file.size,
-                        status: 'pending',
-                        compressedBlob: null,
-                        compressedSize: 0
-                    });
-                }
-            });
-            renderView();
-        }
-
-        function removeBulkFile(index) {
-            state.bulkTool.files.splice(index, 1);
-            renderView();
-        }
-
-        function setBulkTargetKB(kb) {
-            state.bulkTool.targetKB = kb;
-            renderView();
-        }
-
-        async function executeBulkCompression() {
-            const bulk = state.bulkTool;
-            if (bulk.files.length === 0) return;
-
-            bulk.isProcessing = true;
-            renderView();
-
-            const targetBytes = bulk.targetKB * 1024;
-
-            for (let item of bulk.files) {
-                try {
-                    const img = await loadImageObject(item.file);
-                    const res = await compressToTargetSize(img, targetBytes, 'image/jpeg');
-                    item.compressedBlob = res.blob;
-                    item.compressedSize = res.blob.size;
-                    item.status = 'done';
-                } catch (e) {
-                    item.status = 'error';
-                }
-            }
-
-            bulk.isProcessing = false;
-            showToast('All batch images compressed!', 'success');
-            renderView();
-        }
-
-        function loadImageObject(file) {
-            return new Promise((res, rej) => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = new Image();
-                    img.onload = () => res(img);
-                    img.onerror = rej;
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        /* JSZip Download integration */
-        async function downloadBulkZip() {
-            const bulk = state.bulkTool;
-            const compressed = bulk.files.filter(f => f.compressedBlob);
-
-            if (compressed.length === 0) {
-                showToast('Please compress images first before downloading ZIP!', 'error');
-                return;
-            }
-
-            if (typeof JSZip === 'undefined') {
-                showToast('ZIP library still loading. Please try again in a second.', 'error');
-                return;
-            }
-
-            const zip = new JSZip();
-            compressed.forEach((item, i) => {
-                zip.file(`compressed_${item.file.name}`, item.compressedBlob);
-            });
-
-            const content = await zip.generateAsync({ type: 'blob' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(content);
-            link.download = 'OptiShrink_Compressed_Batch.zip';
-            link.click();
-            showToast('ZIP archive created and download initiated!', 'success');
-        }
-
-        function handleContactSubmit(e) {
-            e.preventDefault();
-            showToast('Thank you! Your support message has been sent.', 'success');
-            e.target.reset();
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const hash = window.location.hash.replace('#', '');
-            if (hash && routePages[hash]) {
-                state.currentRoute = hash;
-            }
-            renderView();
-        });
-    </script>
+
+            downloadBtn.href = compressedURL;
+
+
+            const extension =
+              outputType === "image/png"
+                ? "png"
+                : outputType === "image/webp"
+                  ? "webp"
+                  : "jpg";
+
+
+            downloadBtn.download =
+              "compressed-image." + extension;
+
+
+            downloadBtn.style.display =
+              "inline-block";
+
+
+            message.textContent =
+              "Image compressed successfully!";
+
+
+            compressBtn.disabled = false;
+
+            compressBtn.textContent =
+              "Compress Again";
+
+          },
+
+          outputType,
+
+          qualityValueNumber
+
+        );
+
+      };
+
+
+      img.onerror = function() {
+
+        message.textContent =
+          "Could not process this image.";
+
+        compressBtn.disabled = false;
+
+        compressBtn.textContent =
+          "Compress Image";
+
+      };
+
+
+      img.src = originalDataURL;
+
+    });
+
+
+    function formatBytes(bytes) {
+
+      if (bytes === 0) {
+        return "0 Bytes";
+      }
+
+
+      const units = [
+        "Bytes",
+        "KB",
+        "MB",
+        "GB"
+      ];
+
+
+      const index =
+        Math.floor(Math.log(bytes) / Math.log(1024));
+
+
+      return (
+        parseFloat(
+          (bytes / Math.pow(1024, index)).toFixed(2)
+        ) +
+        " " +
+        units[index]
+      );
+
+    }
+
+  </script>
+
 </body>
 </html>
